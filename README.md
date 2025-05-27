@@ -69,7 +69,7 @@ npm run dev
 5. Create OAuth 2.0 credentials:
    - Add authorized redirect URIs:
      - Development: `http://localhost:3000/api/auth/callback/google`
-     - Production: `https://your-domain.com/api/auth/callback/google`
+     - Production: `https://google-meeting-mvp.vercel.app/`
 
 ## Deployment on Vercel
 
