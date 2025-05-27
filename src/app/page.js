@@ -7,7 +7,7 @@ import {
   formatDateTime,
   getCurrentDateTime,
   getMinEndTime,
-  isValidTimeRange
+  isValidTimeRange,
 } from "./utils/dateUtils";
 
 // Import Components
@@ -82,17 +82,18 @@ export default function Home() {
       const startTimeIST = scheduledStartTime + ":00+05:30";
       const endTimeIST = scheduledEndTime + ":00+05:30";
 
-      const data = await API_SERVICES.generateScheduledMeetLink({
+      await API_SERVICES.generateScheduledMeetLink({
         startTime: startTimeIST,
         endTime: endTimeIST,
-      });
-
-      const formattedStartTime = formatDateTime(scheduledStartTime);
-      const formattedEndTime = formatDateTime(scheduledEndTime);
-
-      setMeetingLink(
-        `${data?.meetLink} (Scheduled from ${formattedStartTime} to ${formattedEndTime})`
-      );
+      })
+        .then((data) => {
+          const formattedStartTime = formatDateTime(scheduledStartTime);
+          const formattedEndTime = formatDateTime(scheduledEndTime);
+          setMeetingLink(
+            `${data?.data?.meetLink} (Scheduled from ${formattedStartTime} to ${formattedEndTime})`
+          );
+        })
+        .catch((err) => console.log("error", API_SERVICES.handleError(err)));
     } catch (err) {
       console.error("Error scheduling meeting:", API_SERVICES.handleError(err));
     } finally {
