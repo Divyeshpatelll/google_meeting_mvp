@@ -118,12 +118,12 @@ export default function Home() {
     <div className="min-h-screen bg-gray-50 p-6">
       <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold">Hi, {session.user.name} 👋</h2>
+          <h2 className="text-xl font-semibold text-black">Hi, {session.user.name} 👋</h2>
           <SignOutButton />
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-bold mb-2">🔹 Instant Meeting</h3>
+          <h3 className="text-lg font-bold mb-2 text-black">🔹 Instant Meeting</h3>
           <button
             onClick={generateLink}
             disabled={isLoading}
@@ -143,7 +143,7 @@ export default function Home() {
         </div>
 
         <div className="mb-6">
-          <h3 className="text-lg font-bold mb-2">📅 Schedule Meeting</h3>
+          <h3 className="text-lg font-bold mb-2 text-black">📅 Schedule Meeting</h3>
           <div className="space-y-4">
             <DateTimeInput
               label="Start Date & Time"
