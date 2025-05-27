@@ -63,7 +63,7 @@ export default function Home() {
     setIsLoading(true);
     try {
       const data = await API_SERVICES.generateMeetLink();
-      setMeetingLink(data?.meetLink);
+      setMeetingLink(data?.data?.meetLink);
     } catch (err) {
       console.error("Error generating link:", API_SERVICES.handleError(err));
     } finally {
