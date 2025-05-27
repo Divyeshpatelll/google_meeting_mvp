@@ -10,7 +10,9 @@ const MeetingLink = ({ link }) => (
       {link?.split(" ")?.at(0)}
     </a>
     <br />
+    <span className="text-black">
     {link?.split("(")?.at(1)?.trim() || ""}
+    </span>
   </div>
 );
 
