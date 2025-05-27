@@ -5,11 +5,7 @@ import GoogleProvider from "next-auth/providers/google";
 async function refreshAccessToken(token) {
   try {
     const url = "https://oauth2.googleapis.com/token";
-    console.log(
-      "Attempting to refresh token with refresh token:",
-      token.refreshToken ? "Present" : "Missing"
-    );
-
+   
     if (!token.refreshToken) {
       throw new Error("No refresh token available");
     }
@@ -27,13 +23,7 @@ async function refreshAccessToken(token) {
       },
     });
 
-    console.log("Token refresh response status:", response.status);
-
     const refreshedTokens = response.data;
-
-    console.log(
-      `Setting token expiration to standard 1 hour (${refreshedTokens.expires_in} seconds)`
-    );
 
     return {
       ...token,
@@ -81,19 +71,10 @@ export const authOptions = {
         const remainingTime = Math.round(
           (token.accessTokenExpires - Date.now()) / 1000 / 60
         );
-        console.log(
-          `Token still valid for ${remainingTime} minutes, expires at ${new Date(
-            token.accessTokenExpires
-          ).toLocaleString()}`
-        );
+
         return token;
       }
 
-      console.log(
-        `Token expired at ${new Date(
-          token.accessTokenExpires
-        ).toLocaleString()}, attempting refresh`
-      );
       return await refreshAccessToken(token);
     },
     async session({ session, token }) {

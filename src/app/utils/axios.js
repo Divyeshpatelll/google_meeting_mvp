@@ -1,34 +1,36 @@
 import axios from "axios";
+import { API_CONFIG } from './constants';
 
 const api = axios.create({
-  baseURL: "/api",
-  headers: {
-    "Content-Type": "application/json",
-  },
+  baseURL: API_CONFIG.BASE_URL,
+  headers: API_CONFIG.HEADERS,
 });
 
-api.interceptors.request.use(
-  (config) => {
-    const token =
-      typeof window !== "undefined" ? localStorage.getItem("token") : null;
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-    
-    if (config.data instanceof FormData) {
-      config.headers["Content-Type"] = "multipart/form-data";
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      console.warn("Unauthorized");
-    }
-    return Promise.reject(error);
+const handleRequest = (config) => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  
+  if (config.data instanceof FormData) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
+  return config;
+};
+
+const handleRequestError = (error) => Promise.reject(error);
+
+const handleResponse = (response) => response;
+
+const handleResponseError = (error) => {
+  if (error.response?.status === 401) {
+    console.warn("Unauthorized");
+    // Add any additional unauthorized handling here
+  }
+  return Promise.reject(error);
+};
+
+api.interceptors.request.use(handleRequest, handleRequestError);
+api.interceptors.response.use(handleResponse, handleResponseError);
 
 export default api;

@@ -37,12 +37,12 @@ const handleError = (error) => {
 };
 
 const generateMeetLink = async () => {
-  const response = await api.post("create-meeting");
+  const response = await api.post("meetings/create");
   return response.data;
 };
 
 const generateScheduledMeetLink = async (payload) => {
-  const response = await api.post("create-scheduled-meeting", payload);
+  const response = await api.post("meetings/schedule", payload);
   return response.data;
 };
 
